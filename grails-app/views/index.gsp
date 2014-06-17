@@ -1,122 +1,125 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta name="layout" content="main"/>
-		<title>Welcome to Grails</title>
-		<style type="text/css" media="screen">
-			#status {
-				background-color: #eee;
-				border: .2em solid #fff;
-				margin: 2em 2em 1em;
-				padding: 1em;
-				width: 12em;
-				float: left;
-				-moz-box-shadow: 0px 0px 1.25em #ccc;
-				-webkit-box-shadow: 0px 0px 1.25em #ccc;
-				box-shadow: 0px 0px 1.25em #ccc;
-				-moz-border-radius: 0.6em;
-				-webkit-border-radius: 0.6em;
-				border-radius: 0.6em;
-			}
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="${resource(dir: 'css',file: 'bootstrap.css')}" rel="stylesheet">
+    <!--[if lt IE 9]>
+          <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    <!-- CSS code from Bootply.com editor -->
+    <style type="text/css">
+    .modal-footer {   border-top: 0px; }
+    </style>
+    <g:javascript library="application"/>
+    <r:require module="jquery"/>
+    <r:require module="jquery-validate"/>
+    <r:layoutResources />
+</head>
 
-			.ie6 #status {
-				display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
-			}
+<!-- HTML code from Bootply.com editor -->
 
-			#status ul {
-				font-size: 0.9em;
-				list-style-type: none;
-				margin-bottom: 0.6em;
-				padding: 0;
-			}
+<body  >
+<div class="jumbotron">
+    <div class="container-fluid">
+        <h2>Link Share</h2>
+        <h6>Share what you want to.</h6>
+    </div>
+</div>
+<!--login modal-->
+<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                %{--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>--}%
+                <span class="pull-right"> <img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails" height="60px"/></span>
+                <span class="pull-left"> <img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails" height="60px"/></span>
+                <h1 class="text-center">Login</h1>
+            </div>
 
-			#status li {
-				line-height: 1.3;
-			}
+            <div class="container">
+                <span style="font-size: smaller;color: #116644">${flash.logoutMessage}</span>
+                <span style="font-size: smaller;color: #116644">${flash.invalidLogin}</span>
+                <div class="row">
+                    <div class="span4">
 
-			#status h1 {
-				text-transform: uppercase;
-				font-size: 1.1em;
-				margin: 0 0 0.3em;
-			}
+                        <g:hasErrors bean="${loginCOInstance}">
+                            <g:eachError bean="${loginCOInstance}" var="error">
+                                <div class="alert">
+                                    <a class="close" data-dismiss="alert">×</a>
+                                    <strong>Error!</strong> <g:message error="${error}"/>
+                                </div>
 
-			#page-body {
-				margin: 2em 1em 1.25em 18em;
-			}
+                            </g:eachError>
+                        </g:hasErrors>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="${postUrl}" method="post" class="form col-md-12 center-block">
+                    <g:if test="${loginCOInstance?.loginWith == 'emailID'}">
+                        <g:radio name="loginWith" value="uName" id="uName"  onchange="updateField('username')"/><label for="uName">User Name</label>
+                        <g:radio name="loginWith" value="emailID" id="mailID" checked="checked" onchange="updateField('emailID')"/><label for="mailID" required="">Email Id</label>
+                    </g:if>
+                    <g:else>
+                        <g:radio name="loginWith" value="uName" id="uName"  checked="checked" onchange="updateField('username')"/><label for="uName">User Name</label>
+                        <g:radio name="loginWith" value="emailID" id="mailID"  onchange="updateField('emailID')"/><label for="mailID" required="">Email Id</label>
+                    </g:else>
+                    <div class="form-group">
+                        <g:textField name="j_username" id="username" placeholder="User Name" class="form-control input-lg" title="Please enter User Name." required=""/>
+                    </div>
+                    <div class="form-group">
+                        <g:passwordField name="j_password"  id="password"  placeholder="Password" class="form-control input-lg" title="Please enter Password." />
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="${rememberMeParameter}" value="remember"/>
+                        <label for="rememberMe">Remember Me?</label>
+                    </div>
+                    <div class="form-group">
+                        <g:submitButton name="submit" value="Sign In" class="btn btn-primary btn-lg btn-block" />
+                        <span class="pull-right">
+                            <g:link controller="user" action="create">New User? Sign Up</g:link>
+                        </span>
+                        <span><g:link style='text-decoration:no-underline;font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif' controller="user" action="forgotPassword">Forgot Password?</g:link></span>%{--Need to access Forgot Password Links--}%
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                %{--<div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>--}%
+            </div>
+        </div>
+    </div>
+</div>
+<script type='text/javascript' src="${resource(dir: 'js',file: 'bootstrap.min.js')}"></script>
+<script type='text/javascript' src="${resource(dir: 'js',file: 'bootstrap-alert.js')}"></script>
+<r:script>
+    $(document).ready(function(){
+        updateField('${loginCOInstance?.loginWith}');
+    });
+    function updateField(field){
+        if(field == 'uName'){
+            field = 'username';
+        }
+        if(field == 'emailID'){
+            $('#username').attr('id',field);
+            $('#'+field).attr('name',field);
+            $('#'+field).attr('title','Please enter Email ID.');
+            $('#'+field).attr('placeholder','Email ID');
+            $('#'+field).val('${loginCOInstance?.emailID}');
 
-			h2 {
-				margin-top: 1em;
-				margin-bottom: 0.3em;
-				font-size: 1em;
-			}
-
-			p {
-				line-height: 1.5;
-				margin: 0.25em 0;
-			}
-
-			#controller-list ul {
-				list-style-position: inside;
-			}
-
-			#controller-list li {
-				line-height: 1.3;
-				list-style-position: inside;
-				margin: 0.25em 0;
-			}
-
-			@media screen and (max-width: 480px) {
-				#status {
-					display: none;
-				}
-
-				#page-body {
-					margin: 0 1em 1em;
-				}
-
-				#page-body h1 {
-					margin-top: 0;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div id="status" role="complementary">
-			<h1>Application Status</h1>
-			<ul>
-				<li>App version: <g:meta name="app.version"/></li>
-				<li>Grails version: <g:meta name="app.grails.version"/></li>
-				<li>Groovy version: ${GroovySystem.getVersion()}</li>
-				<li>JVM version: ${System.getProperty('java.version')}</li>
-				<li>Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</li>
-				<li>Controllers: ${grailsApplication.controllerClasses.size()}</li>
-				<li>Domains: ${grailsApplication.domainClasses.size()}</li>
-				<li>Services: ${grailsApplication.serviceClasses.size()}</li>
-				<li>Tag Libraries: ${grailsApplication.tagLibClasses.size()}</li>
-			</ul>
-			<h1>Installed Plugins</h1>
-			<ul>
-				<g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-					<li>${plugin.name} - ${plugin.version}</li>
-				</g:each>
-			</ul>
-		</div>
-		<div id="page-body" role="main">
-			<h1>Welcome to Grails</h1>
-			<p>Congratulations, you have successfully started your first Grails application! At the moment
-			   this is the default page, feel free to modify it to either redirect to a controller or display whatever
-			   content you may choose. Below is a list of controllers that are currently deployed in this application,
-			   click on each to execute its default action:</p>
-
-			<div id="controller-list" role="navigation">
-				<h2>Available Controllers:</h2>
-				<ul>
-					<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-						<li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
-					</g:each>
-				</ul>
-			</div>
-		</div>
-	</body>
+        }else{
+            $('#emailID').attr('id',field);
+            $('#'+field).attr('name',field);
+            $('#'+field).attr('title','Please enter User Name.');
+            $('#'+field).attr('placeholder','User Name');
+            $('#'+field).val('${loginCOInstance?.username}');
+        }
+    }
+</r:script>
+<r:layoutResources />
+</body>
 </html>

@@ -38,6 +38,47 @@ grails.mime.types = [ // the first one is the default format
 grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
 grails.resources.adhoc.includes = ['/images/**', '/css/**', '/js/**', '/plugins/**']
 
+grails.resources.modules = {
+    application {
+        resource url:'/js/application.js'
+    }
+
+    jquery{
+        resource url:'/js/jquery-1.11.1.min.js'
+    }
+
+    colorbox{
+        dependsOn 'jquery'
+        resource url: '/js/jquery.colorbox.js'
+        resource url: '/css/colorbox.css'
+    }
+
+    bootstrap{
+        dependsOn 'jquery'
+        resource url: 'js/bootstrap.min.js'
+        resource url: 'css/bootstrap.css'
+        resource url: 'js/bootstrap-alert.js'
+    }
+
+    select2{
+        dependsOn 'jquery'
+        resource url :'js/select2.js'
+        resource url :'css/select2.css'
+    }
+
+    multiselect{
+        dependsOn 'jquery'
+        resource url:'js/jquery.multiselect.js'
+        resource url:'css/jquery.multiselect.css'
+    }
+
+    multiselectFilter{
+        dependsOn 'multiselect'
+        resource url:'js/jquery.multiselect.filter.js'
+        resource url :'css/jquery.multiselect.filter.css'
+    }
+}
+
 // Legacy setting for codec used to encode data with ${}
 grails.views.default.codec = "html"
 
@@ -119,3 +160,81 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+// Added by the JQuery Validation UI plugin:
+jqueryValidationUi {
+	errorClass = 'error'
+	validClass = 'valid'
+	onsubmit = true
+	renderErrorsOnTop = false
+	
+	qTip {
+		packed = true
+	  classes = 'ui-tooltip-red ui-tooltip-shadow ui-tooltip-rounded'  
+	}
+	
+	/*
+	  Grails constraints to JQuery Validation rules mapping for client side validation.
+	  Constraint not found in the ConstraintsMap will trigger remote AJAX validation.
+	*/
+	StringConstraintsMap = [
+		blank:'required', // inverse: blank=false, required=true
+		creditCard:'creditcard',
+		email:'email',
+		inList:'inList',
+		minSize:'minlength',
+		maxSize:'maxlength',
+		size:'rangelength',
+		matches:'matches',
+		notEqual:'notEqual',
+		url:'url',
+		nullable:'required',
+		unique:'unique',
+		validator:'validator'
+	]
+	
+	// Long, Integer, Short, Float, Double, BigInteger, BigDecimal
+	NumberConstraintsMap = [
+		min:'min',
+		max:'max',
+		range:'range',
+		notEqual:'notEqual',
+		nullable:'required',
+		inList:'inList',
+		unique:'unique',
+		validator:'validator'
+	]
+	
+	CollectionConstraintsMap = [
+		minSize:'minlength',
+		maxSize:'maxlength',
+		size:'rangelength',
+		nullable:'required',
+		validator:'validator'
+	]
+	
+	DateConstraintsMap = [
+		min:'minDate',
+		max:'maxDate',
+		range:'rangeDate',
+		notEqual:'notEqual',
+		nullable:'required',
+		inList:'inList',
+		unique:'unique',
+		validator:'validator'
+	]
+	
+	ObjectConstraintsMap = [
+		nullable:'required',
+		validator:'validator'
+	]
+	
+	CustomConstraintsMap = [
+		phone:'true', // International phone number validation
+		phoneUS:'true',
+		alphanumeric:'true',
+		letterswithbasicpunc:'true',
+    lettersonly:'true'
+	]	
+}
+
