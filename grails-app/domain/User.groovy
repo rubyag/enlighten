@@ -1,9 +1,9 @@
 
 
 
-import linksharing.resource.Resource
-import linksharing.resource.ResourceSettings
-import linksharing.resource.Topic
+//import linksharing.resource.Resource
+//import linksharing.resource.ResourceSettings
+//import linksharing.resource.Topic
 
 class User {
 
@@ -28,9 +28,9 @@ class User {
     String answer
 	static transients = ['springSecurityService','passwordConfirm']
 
-    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic,resourceSettings:ResourceSettings,resources:Resource]
+//    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic,resourceSettings:ResourceSettings,resources:Resource]
 
-    static  belongsTo = [secretQuestion:SecretQuestion]
+//    static  belongsTo = [secretQuestion:SecretQuestion]
 
 
     static constraints = {
@@ -49,7 +49,7 @@ class User {
         }*/
         answer nullable: true
         secretKeyToResetPassword nullable: true
-        secretQuestion nullable: true
+//        secretQuestion nullable: true
         username blank: false, unique: true
     }
 
@@ -59,9 +59,9 @@ class User {
         password column: '`password`',type:'text'
     }
 
-	Set<Role> getAuthorities() {
+	/*Set<Role> getAuthorities() {
 		UserRole.findAllByUser(this).collect { it.role }
-	}
+	}*/
 
 	def beforeInsert() {
 		encodePassword()

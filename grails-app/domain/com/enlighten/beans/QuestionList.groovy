@@ -4,7 +4,7 @@ class QuestionList {
 
     static constraints = {
     }
-    String subjectName;
-    Set<Question> questionSet;
+    String subjectName
+    Set<Question> questionSet
 
 }

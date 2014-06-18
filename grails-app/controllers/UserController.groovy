@@ -1,13 +1,14 @@
+/*
 
 
 import com.linksharing.ForgotPasswordCO
 import com.linksharing.LoginCO
 import com.linksharing.SecretQuestionCO
 import com.linksharing.UpdatePasswordCO
-import grails.plugin.simplecaptcha.SimpleCaptchaService
+//import grails.plugin.simplecaptcha.SimpleCaptchaService
 import grails.transaction.Transactional
-import linksharing.resource.Resource
-import linksharing.resource.Topic
+//import linksharing.resource.Resource
+//import linksharing.resource.Topic
 import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.NOT_FOUND
@@ -16,14 +17,16 @@ import static org.springframework.http.HttpStatus.OK
 //@Transactional(readOnly = true)
 @Secured('permitAll')
 class UserController {
-    def SimpleCaptchaService simpleCaptchaService;
+  //  def SimpleCaptchaService simpleCaptchaService;
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     def mailService
     def utilityService
 
-    /**
+    */
+/**
      * Dependency injection for the springSecurityService.
-     */
+     *//*
+
     def springSecurityService
 
 
@@ -67,45 +70,20 @@ class UserController {
     }
 
 
-    @Secured(['ROLE_ADMIN','ROLE_USER'])
-    def dashboard(){
-        println "====coming in here========"
 
-        User user = springSecurityService.getCurrentUser()
-
-        if(!user){
-            flash.put("invalidLogin","You are not logged in.")
-            redirect(controller: 'user',action: 'invalidLogin')
-        }else{
-            List subscribedTopics =   Topic.executeQuery("select t from Topic t join t.userSubscriptionDetails usd where usd.user.id=:userID",[userID:user.id])
-            request.setAttribute("subscribedTopics",subscribedTopics)
-            /* List unreadItems = Resource.createCriteria().list {
-                 //eq("resourceSettings.readStatus",'unread')
-                 //   eq("topic.userSubscriptionDetails.user.id",Long.parseLong(userID))
-             }*/
-            List unreadItems = Resource.executeQuery("select r from Resource r join r.resourceSettings rs  where rs.readStatus='unread'  and rs.user.id=:userID",[userID:user.id])
-            request.setAttribute("unreadItems",unreadItems)
-
-
-            List top15Topics = Topic.createCriteria().list(max: 15) {
-                eq("visibility",'public')
-            }
-            request.setAttribute("top15Topics",top15Topics)
-        }
-        render (view:"dashboard")
-    }
-
-
-    @Secured(['ROLE_ADMIN','ROLE_USER'])
+    */
+/*@Secured(['ROLE_ADMIN','ROLE_USER'])
     def topics(){
-        render (controllerName:"topic",view:"dashboard")
+        render (controllerName:"topic",view:"topicboard")
     }
+*//*
 
 
     @Secured(['ROLE_ADMIN','ROLE_USER'])
     def logout(){
 
-        /* Cookie loginCookie = null;
+        */
+/* Cookie loginCookie = null;
          Cookie[] cookies = request.getCookies();
          if(cookies != null){
              for(Cookie cookie : cookies){
@@ -118,7 +96,8 @@ class UserController {
          if(loginCookie != null){
              loginCookie.setMaxAge(0);
              response.addCookie(loginCookie);
-         }*/
+         }*//*
+
 
         if(session != null){
             session.invalidate();
@@ -154,11 +133,13 @@ class UserController {
                 //setting session to expiry in 30 mins
                 session.setMaxInactiveInterval(30*60);
 
-                /*Cookie loginCookie = new Cookie("user",user);
+                */
+/*Cookie loginCookie = new Cookie("user",user);
                 //setting cookie to expiry in 30 mins
                 loginCookie.setMaxAge(30*60);
                 response.addCookie(loginCookie);
-                response.addCookie(loginCookie);*/
+                response.addCookie(loginCookie);*//*
+
 
                 redirect (controller: 'user', action: "dashboard")
             }
@@ -197,13 +178,15 @@ class UserController {
         userInstance.save flush:true
         redirect action:'login',params: ['username':userInstance.username,'password':userInstance.password,'loginWith':'uName']
 
-        /*request.withFormat {
+        */
+/*request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
                 redirect userInstance
             }
             '*' { respond userInstance, [status: CREATED] }
-        }*/
+        }*//*
+
     }
 
     def edit(User userInstance) {
@@ -306,3 +289,4 @@ class UserController {
         }
     }
 }
+*/
